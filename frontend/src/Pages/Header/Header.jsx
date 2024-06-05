@@ -2,10 +2,12 @@ import React from 'react';
 import { Outlet } from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 
+import "./Header.css"
+
 const Header = () => {
     return (
         <div className="Header">
-            <Navbar bg="dark" variant="dark" expand="lg">
+            <Navbar bg="dark" variant="dark" expand="lg" className="navbar-custom">
                 <Navbar.Brand href="#">VGDB</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
