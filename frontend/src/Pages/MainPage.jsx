@@ -2,7 +2,7 @@ const MainPage = () => {
 
     return (
         <div>
-            This is a TEST!
+            Welcome to the Videogame Database!
         </div>
     )
 }
