@@ -25,10 +25,12 @@ const MainPage = () => {
     };
 
     return (
-        <div className="MainPage">
-            <h1>Welcome to VGDB</h1>
-            <p>This is a video game database. Here you can find information about your favorite games.</p>
+        <div className="main-page">
             <Container>
+                <div className="welcome-section text-center">
+                    <h1 className="display-4">Welcome to VGDB</h1>
+                    <p className="lead">Your ultimate video game database. Discover and explore new games every day!</p>
+                </div>
                 <Row>
                     {games.map(game => (
                         <Col key={game.id} xs={12} sm={6} md={4} lg={3}>
