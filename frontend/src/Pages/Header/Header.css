@@ -5,3 +5,7 @@
 .Header {
     font-family: Arial, sans-serif;
 }
+
+.navbar-collapse {
+    justify-content: space-between;
+}
