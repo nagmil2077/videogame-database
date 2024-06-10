@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { searchGames } from '../Services/rawgService';
-import { Container, ListGroup, Image } from 'react-bootstrap';
+import {Container, ListGroup, Image, Button} from 'react-bootstrap';
 import './SearchResults.css';
 
 const SearchResults = () => {
     const location = useLocation();
     const query = new URLSearchParams(location.search).get('query');
     const [results, setResults] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (query && query.length >= 2) {
@@ -37,6 +38,8 @@ const SearchResults = () => {
                     </ListGroup.Item>
                 ))}
             </ListGroup>
+            <br/>
+            <Button variant="primary" onClick={() => navigate("/")}>Back to Main Page</Button>
         </Container>
     );
 }
