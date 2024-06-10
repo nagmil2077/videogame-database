@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import {Navbar, Nav, Container} from 'react-bootstrap';
 import SearchField from '../../Components/SearchField';
 import "./Header.css"
@@ -9,7 +9,7 @@ const Header = () => {
         <div className="Header">
             <Navbar bg="dark" variant="dark" expand="lg" className="navbar-custom">
                 <Container>
-                    <Navbar.Brand href="#">VGDB</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/">VGDB</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
                         <SearchField />
