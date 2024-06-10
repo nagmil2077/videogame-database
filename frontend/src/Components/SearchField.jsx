@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { searchGames } from '../Services/rawgService';
 import {Form, FormControl, Dropdown, Button} from 'react-bootstrap';
 import './SearchField.css';
@@ -7,6 +8,7 @@ const SearchField = () => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (query.length >= 2) {
@@ -29,13 +31,16 @@ const SearchField = () => {
         setDropdownOpen(true);
     };
 
+    // Delay to allow click on dropdown items
     const handleBlur = () => {
-        setTimeout(() => setDropdownOpen(false), 200); // Delay to allow click on dropdown items
+        setTimeout(() => setDropdownOpen(false), 200);
     };
 
     const handleSearch = () => {
-        if (query.length <= 2) {
+        if (query.length < 2) {
             setDropdownOpen(true);
+        } else if (query.length >= 2) {
+            navigate(`/search?query=${query}`);
         }
     };
 
