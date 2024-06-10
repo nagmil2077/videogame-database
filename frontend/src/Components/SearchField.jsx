@@ -34,7 +34,7 @@ const SearchField = () => {
     };
 
     const handleSearch = () => {
-        if (query.length >= 2) {
+        if (query.length <= 2) {
             setDropdownOpen(true);
         }
     };
@@ -60,11 +60,13 @@ const SearchField = () => {
                         <Dropdown.Item disabled>Please enter 2 or more characters</Dropdown.Item>
                     ) : (
                         results.map((game) => (
-                            <Dropdown.Item key={game.id}>
-                                {game.name} ({game.released})
+                            <Dropdown.Item key={game.id} className="search-result-item">
+                                <img src={game.background_image} alt={game.name} className="search-result-thumbnail" />
+                                <span className="search-result-name">{game.name}</span>
+                                <span className="search-result-year">({new Date(game.released).getFullYear()})</span>
                             </Dropdown.Item>
                         ))
-                    )}
+                    )};
                 </Dropdown.Menu>
             )}
         </div>
