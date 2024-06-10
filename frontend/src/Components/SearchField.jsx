@@ -66,7 +66,7 @@ const SearchField = () => {
                                 <span className="search-result-year">({new Date(game.released).getFullYear()})</span>
                             </Dropdown.Item>
                         ))
-                    )};
+                    )}
                 </Dropdown.Menu>
             )}
         </div>
