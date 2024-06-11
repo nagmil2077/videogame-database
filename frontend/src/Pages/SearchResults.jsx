@@ -43,6 +43,6 @@ const SearchResults = () => {
             <Button variant="primary" onClick={() => navigate("/")}>Back to Main Page</Button>
         </Container>
     );
-}
+};
 
 export default SearchResults;

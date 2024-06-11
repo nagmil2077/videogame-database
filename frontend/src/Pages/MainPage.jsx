@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { fetchGames } from '../Services/rawgService';
+import React, {useEffect, useState} from 'react';
+import {fetchGames} from '../Services/rawgService';
 import GameCard from '../Components/GameCard';
-import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import {Col, Container, Pagination, Row} from 'react-bootstrap';
+
+const loadGames = async (currentPage, pageSize) => {
+    try {
+        return await fetchGames(currentPage, pageSize);
+    } catch (error) {
+        console.error("Error loading games:", error);
+    }
+};
 
 const MainPage = () => {
     const [games, setGames] = useState([]);
@@ -9,15 +17,8 @@ const MainPage = () => {
     const [pageSize] = useState(10);
 
     useEffect(() => {
-        const loadGames = async () => {
-            try {
-                const data = await fetchGames(currentPage, pageSize);
-                setGames(data.results);
-            } catch (error) {
-                console.error("Error loading games:", error);
-            }
-        };
-        loadGames();
+        loadGames(currentPage, pageSize)
+            .then(data => setGames(data.results));
     }, [currentPage, pageSize]);
 
     const handlePageChange = (pageNumber) => {
@@ -46,6 +47,6 @@ const MainPage = () => {
             </Container>
         </div>
     )
-}
+};
 
 export default MainPage;

@@ -23,6 +23,6 @@ const Header = () => {
             <Outlet />
         </div>
     );
-}
+};
 
 export default Header;
