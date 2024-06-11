@@ -35,8 +35,9 @@ const GamePage = () => {
                 </Col>
                 <Col md={8}>
                     <h1>{game.name}</h1>
-                    <p><strong>Release Date:</strong> {game.released}</p>
+                    <p><strong>Release Date:</strong> {new Date(game.released).toLocaleDateString()}</p>
                     <p><strong>Genre:</strong> {game.genres.map(genre => genre.name).join(', ')}</p>
+                    <p><strong>Developer:</strong> {game.developers.map(dev => dev.name).join(', ')}</p>
                     <p><strong>Description:</strong> {game.description_raw}</p>
                 </Col>
             </Row>
