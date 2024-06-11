@@ -38,3 +38,17 @@ export const searchGames = async (query) => {
         throw error;
     }
 };
+
+export const fetchGameDetails = async (gameSlug) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/games/${gameSlug}`, {
+            params: {
+                key: API_KEY,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching game details:", error);
+        throw error;
+    }
+};
