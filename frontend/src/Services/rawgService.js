@@ -18,3 +18,23 @@ export const fetchGames = async (page = 1, pageSize = 10) => {
         throw error;
     }
 };
+
+export const searchGames = async (query) => {
+    if (query.length < 2) {
+        return { results: [] };
+    }
+
+    try {
+        const response = await axios.get(`${BASE_URL}/games`, {
+            params: {
+                key: API_KEY,
+                search: query,
+                page_size: 10,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error searching games:", error);
+        throw error;
+    }
+};

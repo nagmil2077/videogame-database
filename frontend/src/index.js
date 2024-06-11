@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 import Header from "./Pages/Header/Header";
 import MainPage from "./Pages/MainPage"
+import SearchResults from "./Pages/SearchResults";
 import ErrorPage from "./Pages/ErrorPage";
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <MainPage />,
+            },
+            {
+              path: "/search",
+              element: <SearchResults />,
             },
         ],
     },
