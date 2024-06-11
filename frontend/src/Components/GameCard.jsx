@@ -18,13 +18,10 @@ const GameCard = ({ game }) => {
                     Genre: {game.genres.map(genre => genre.name).join(', ')}
                 </Card.Text>
                 <Card.Text>
-                    Release Date: {game.released}
+                    Release Date: {new Date(game.released).toLocaleDateString()}
                 </Card.Text>
                 <Card.Text>
                     Developer: {game.developers ? game.developers.map(dev => dev.name).join(', ') : 'N/A'}
-                </Card.Text>
-                <Card.Text>
-                    {game.description_raw ? `${game.description_raw.substring(0, 100)}...` : 'No description available.'}
                 </Card.Text>
             </Card.Body>
         </Card>
