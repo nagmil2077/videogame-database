@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { searchGames } from '../Services/rawgService';
-import {Container, ListGroup, Image, Button} from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {searchGames} from '../Services/rawgService';
+import {Button, Container, Image, ListGroup} from 'react-bootstrap';
 import './SearchResults.css';
+
+const fetchResults = async (query) => {
+    try {
+        return await searchGames(query);
+    } catch (error) {
+        console.error("Error fetching search results:", error);
+    }
+};
 
 const SearchResults = () => {
     const location = useLocation();
@@ -12,15 +20,8 @@ const SearchResults = () => {
 
     useEffect(() => {
         if (query && query.length >= 2) {
-            const fetchResults = async () => {
-                try {
-                    const data = await searchGames(query);
-                    setResults(data.results);
-                } catch (error) {
-                    console.error("Error fetching search results:", error);
-                }
-            };
-            fetchResults();
+            fetchResults(query)
+                .then(data => setResults(data.results));
         }
     }, [query]);
 

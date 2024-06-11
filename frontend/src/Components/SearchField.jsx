@@ -1,8 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { searchGames } from '../Services/rawgService';
-import {Form, FormControl, Dropdown, Button} from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {searchGames} from '../Services/rawgService';
+import {Button, Dropdown, Form, FormControl} from 'react-bootstrap';
 import './SearchField.css';
+
+const fetchResults = async (query) => {
+    try {
+        return await searchGames(query);
+    } catch (error) {
+        console.error("Error fetching search results:", error);
+    }
+};
 
 const SearchField = () => {
     const [query, setQuery] = useState('');
@@ -12,15 +20,8 @@ const SearchField = () => {
 
     useEffect(() => {
         if (query.length >= 2) {
-            const fetchResults = async () => {
-                try {
-                    const data = await searchGames(query);
-                    setResults(data.results);
-                } catch (error) {
-                    console.error("Error fetching search results:", error);
-                }
-            };
-            fetchResults();
+            fetchResults(query)
+                .then(data => setResults(data.results));
         } else {
             setResults([]);
         }
@@ -31,7 +32,6 @@ const SearchField = () => {
         setDropdownOpen(true);
     };
 
-    // Delay to allow click on dropdown items
     const handleBlur = () => {
         setTimeout(() => setDropdownOpen(false), 200);
     };
