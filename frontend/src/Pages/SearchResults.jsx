@@ -26,22 +26,24 @@ const SearchResults = () => {
     }, [query]);
 
     return (
-        <Container>
-            <h2>Search Results for "{query}"</h2>
-            <ListGroup>
-                {results.map(game => (
-                    <ListGroup.Item key={game.id} className="search-result-item">
-                        <Image src={game.background_image} alt={game.name} className="search-result-thumbnail" />
-                        <div className="search-result-details">
-                            <span className="search-result-name">{game.name}</span>
-                            <span className="search-result-year">({new Date(game.released).getFullYear()})</span>
-                        </div>
-                    </ListGroup.Item>
-                ))}
-            </ListGroup>
-            <br/>
-            <Button variant="primary" onClick={() => navigate("/")}>Back to Main Page</Button>
-        </Container>
+        <div className="search-results-page">
+            <Container>
+                <h2>Search Results for "{query}"</h2>
+                <ListGroup>
+                    {results.map(game => (
+                        <ListGroup.Item key={game.id} className="search-result-item">
+                            <Image src={game.background_image} alt={game.name} className="search-result-thumbnail" />
+                            <div className="search-result-details">
+                                <span className="search-result-name">{game.name}</span>
+                                <span className="search-result-year">({new Date(game.released).getFullYear()})</span>
+                            </div>
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+                <br/>
+                <Button variant="secondary" onClick={() => navigate("/")}>Back to Main Page</Button>
+            </Container>
+        </div>
     );
 };
 
