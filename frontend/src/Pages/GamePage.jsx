@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchGameDetails } from '../Services/rawgService';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import './GamePage.css'
