@@ -51,43 +51,45 @@ const GamePage = () => {
     }
 
     return (
-        <Container className="game-page">
-            <Button variant="secondary" onClick={() => navigate('/')}>Back</Button>
-            <Row className="mt-4">
-                <Col md={4}>
-                    <Image src={game.background_image} alt={game.name} fluid />
-                </Col>
-                <Col md={8}>
-                    <h1>{game.name}</h1>
-                    <p><strong>Release Date:</strong> {new Date(game.released).toLocaleDateString()}</p>
-                    <p><strong>Genre:</strong> {game.genres.map(genre => genre.name).join(', ')}</p>
-                    <p><strong>Developer:</strong> {game.developers.map(dev => dev.name).join(', ')}</p>
-                    <p><strong>Description:</strong> {game.description_raw}</p>
-                </Col>
-            </Row>
-            <Row className="mt-4">
-                {screenshots.map((screenshot) => (
-                    <Col md={3} key={screenshot.id}>
-                        <Image
-                            src={screenshot.image}
-                            alt={`Screenshot ${screenshot.id}`}
-                            thumbnail
-                            onClick={() => handleScreenshotClick(screenshot.image)}
-                            className="game-screenshot"
-                        />
+        <div className="game-page">
+            <Container className="game-page-container">
+                <Button variant="secondary" onClick={() => navigate('/')}>Back</Button>
+                <Row className="mt-4">
+                    <Col md={4}>
+                        <Image src={game.background_image} alt={game.name} fluid />
                     </Col>
-                ))}
-            </Row>
+                    <Col md={8}>
+                        <h1>{game.name}</h1>
+                        <p><strong>Release Date:</strong> {new Date(game.released).toLocaleDateString()}</p>
+                        <p><strong>Genre:</strong> {game.genres.map(genre => genre.name).join(', ')}</p>
+                        <p><strong>Developer:</strong> {game.developers.map(dev => dev.name).join(', ')}</p>
+                        <p><strong>Description:</strong> {game.description_raw}</p>
+                    </Col>
+                </Row>
+                <Row className="mt-4">
+                    {screenshots.map((screenshot) => (
+                        <Col md={3} key={screenshot.id}>
+                            <Image
+                                src={screenshot.image}
+                                alt={`Screenshot ${screenshot.id}`}
+                                thumbnail
+                                onClick={() => handleScreenshotClick(screenshot.image)}
+                                className="game-screenshot"
+                            />
+                        </Col>
+                    ))}
+                </Row>
 
-            <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Screenshot</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Image src={selectedScreenshot} alt="Full-size screenshot" fluid />
-                </Modal.Body>
-            </Modal>
-        </Container>
+                <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Screenshot</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Image src={selectedScreenshot} alt="Full-size screenshot" fluid />
+                    </Modal.Body>
+                </Modal>
+            </Container>
+        </div>
     );
 };
 
