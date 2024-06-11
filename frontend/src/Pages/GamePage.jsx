@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { fetchGameDetails } from '../Services/rawgService';
-import { Container, Row, Col, Button, Image } from 'react-bootstrap';
-import './GamePage.css'
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {fetchGameDetails, fetchGameScreenshots} from '../Services/rawgService';
+import {Button, Col, Container, Image, Modal, Row} from 'react-bootstrap';
+import './GamePage.css';
 
 const fetchDetails = async (gameName) => {
     try {
@@ -10,17 +10,41 @@ const fetchDetails = async (gameName) => {
     } catch (error) {
         console.error("Error fetching game details:", error);
     }
-}
+};
+
+const fetchScreenshots = async (gameName) => {
+    try {
+        return await fetchGameScreenshots(gameName);
+    } catch (error) {
+        console.error("Error fetching game screenshots:", error);
+    }
+};
 
 const GamePage = () => {
     const { gameName } = useParams();
     const [game, setGame] = useState(null);
+    const [screenshots, setScreenshots] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedScreenshot, setSelectedScreenshot] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchDetails(gameName)
-            .then(data => setGame(data))
+            .then(data => setGame(data));
+
+        fetchScreenshots(gameName)
+            .then(data => setScreenshots(data.results));
     }, [gameName]);
+
+    const handleScreenshotClick = (screenshot) => {
+        setSelectedScreenshot(screenshot);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedScreenshot(null);
+    };
 
     if (!game) {
         return <div>Loading...</div>;
@@ -42,17 +66,27 @@ const GamePage = () => {
                 </Col>
             </Row>
             <Row className="mt-4">
-                <Col>
-                    <iframe
-                        width="100%"
-                        height="500"
-                        src={`https://www.youtube.com/embed/${game.clip?.video}`}
-                        title="Game Trailer"
-                        frameBorder="0"
-                        allowFullScreen
-                    ></iframe>
-                </Col>
+                {screenshots.map((screenshot) => (
+                    <Col md={3} key={screenshot.id}>
+                        <Image
+                            src={screenshot.image}
+                            alt={`Screenshot ${screenshot.id}`}
+                            thumbnail
+                            onClick={() => handleScreenshotClick(screenshot.image)}
+                            className="game-screenshot"
+                        />
+                    </Col>
+                ))}
             </Row>
+
+            <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Screenshot</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Image src={selectedScreenshot} alt="Full-size screenshot" fluid />
+                </Modal.Body>
+            </Modal>
         </Container>
     );
 };
