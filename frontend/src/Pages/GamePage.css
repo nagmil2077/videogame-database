@@ -1,0 +1,16 @@
+.game-page {
+    margin-top: 20px;
+}
+
+.game-page .game-thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+.game-page .game-details {
+    margin-top: 20px;
+}
+
+.game-page iframe {
+    margin-top: 20px;
+}
