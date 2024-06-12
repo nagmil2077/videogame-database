@@ -10,7 +10,10 @@ const GameCard = ({ game }) => {
     };
 
     return (
-        <Card className="game-card" onClick={handleClick} style={{ width: '18rem', margin: '1rem', cursor: "pointer" }}>
+        <Card
+            className="game-card"
+            onClick={handleClick}
+            style={{ width: '18rem', margin: '1rem', cursor: "pointer" }}>
             <Card.Img variant="top" src={game.background_image} alt={game.name} />
             <Card.Body>
                 <Card.Title>{game.name}</Card.Title>
