@@ -25,6 +25,7 @@
 
 .search-result-name {
     font-weight: bold;
+    cursor: pointer;
 }
 
 .search-result-year {

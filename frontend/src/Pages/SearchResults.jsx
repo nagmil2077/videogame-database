@@ -34,7 +34,10 @@ const SearchResults = () => {
                         <ListGroup.Item key={game.id} className="search-result-item">
                             <Image src={game.background_image} alt={game.name} className="search-result-thumbnail" />
                             <div className="search-result-details">
-                                <span className="search-result-name">{game.name}</span>
+                                <span
+                                    className="search-result-name"
+                                    onClick={() => navigate(`/games/${game.slug}`)}>{game.name}
+                                </span>
                                 <span className="search-result-year">({new Date(game.released).getFullYear()})</span>
                             </div>
                         </ListGroup.Item>
