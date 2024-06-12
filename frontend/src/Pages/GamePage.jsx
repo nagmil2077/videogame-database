@@ -53,7 +53,7 @@ const GamePage = () => {
     return (
         <div className="game-page">
             <Container className="game-page-container">
-                <Button variant="secondary" onClick={() => navigate('/')}>Back</Button>
+                <Button variant="secondary" onClick={() => navigate('/')}>Back to Main Page</Button>
                 <Row className="mt-4">
                     <Col md={4}>
                         <Image src={game.background_image} alt={game.name} fluid />
