@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\JsonResponse;
 
 class GameController extends Controller
 {
@@ -16,7 +17,7 @@ class GameController extends Controller
         $this->baseUrl = 'https://api.rawg.io/api';
     }
 
-    public function fetchAllGames(Request $request)
+    public function fetchAllGames(Request $request): JsonResponse
     {
         $page = $request->query('page', 1);
         $pageSize = $request->query('page_size', 10);
@@ -25,6 +26,15 @@ class GameController extends Controller
             'key' => $this->apiKey,
             'page' => $page,
             'page_size' => $pageSize,
+        ]);
+
+        return response()->json($response->json());
+    }
+
+    public function fetchGame($slug): JsonResponse
+    {
+        $response = Http::get("{$this->baseUrl}/games/{$slug}", [
+            'key' => $this->apiKey,
         ]);
 
         return response()->json($response->json());
