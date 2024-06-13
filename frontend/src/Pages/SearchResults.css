@@ -1,4 +1,12 @@
+.search-results-page {
+    background: url("../../public/bg-white1.jpg") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
 .search-result-item {
+    background-color: transparent;
     display: flex;
     align-items: center;
 }
@@ -17,6 +25,7 @@
 
 .search-result-name {
     font-weight: bold;
+    cursor: pointer;
 }
 
 .search-result-year {
