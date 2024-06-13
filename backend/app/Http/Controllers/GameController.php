@@ -48,4 +48,21 @@ class GameController extends Controller
 
         return response()->json($response->json());
     }
+
+    public function searchGames(Request $request): JsonResponse
+    {
+        $query = $request->query('query');
+
+        if (strlen($query) < 2) {
+            return response()->json(['results' => []]);
+        }
+
+        $response = Http::get("{$this->baseUrl}/games", [
+            'key' => $this->apiKey,
+            'search' => $query,
+            'page_size' => 10,
+        ]);
+
+        return response()->json($response->json());
+    }
 }
