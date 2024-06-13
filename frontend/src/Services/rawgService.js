@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const BASE_URL = 'http://127.0.0.1:8000/api';
+
 export const fetchGames = async (page = 1, pageSize = 10) => {
     try {
-        const response = await axios.get(`/api/games`, {
+        const response = await axios.get(`${BASE_URL}/games`, {
             params: {
                 page,
                 page_size: pageSize,
@@ -17,7 +19,7 @@ export const fetchGames = async (page = 1, pageSize = 10) => {
 
 export const searchGames = async (query) => {
     try {
-        const response = await axios.get(`/api/games`, {
+        const response = await axios.get(`${BASE_URL}/search`, {
             params: {
                 query,
             },
@@ -31,7 +33,7 @@ export const searchGames = async (query) => {
 
 export const fetchGameDetails = async (gameSlug) => {
     try {
-        const response = await axios.get(`/api/games/${gameSlug}`);
+        const response = await axios.get(`${BASE_URL}/games/${gameSlug}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching game details:", error);
@@ -41,7 +43,7 @@ export const fetchGameDetails = async (gameSlug) => {
 
 export const fetchGameScreenshots = async (gameSlug) => {
     try {
-        const response = await axios.get(`/api/games/${gameSlug}/screenshots`);
+        const response = await axios.get(`${BASE_URL}/games/${gameSlug}/screenshots`);
         return response.data;
     } catch (error) {
         console.error("Error fetching game screenshots:", error);
