@@ -39,4 +39,13 @@ class GameController extends Controller
 
         return response()->json($response->json());
     }
+
+    public function fetchScreenshots($slug): JsonResponse
+    {
+        $response = Http::get("{$this->baseUrl}/games/{$slug}/screenshots", [
+            'key' => $this->apiKey,
+        ]);
+
+        return response()->json($response->json());
+    }
 }
