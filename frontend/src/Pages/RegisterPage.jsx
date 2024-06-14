@@ -22,7 +22,10 @@ const RegisterPage = () => {
     return (
         <div>
             <h2>Register</h2>
-            <UserForm handleSubmit={handleSubmit} />
+            <UserForm
+                handleSubmit={handleSubmit}
+                onCancel={() => navigate('/')}
+            />
         </div>
     );
 };

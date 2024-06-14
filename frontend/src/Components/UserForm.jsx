@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import React, {useState} from "react";
+import {Form, Button, Container, Row, Col} from 'react-bootstrap';
 
-const UserForm = ({ handleSubmit }) => {
+const UserForm = ({ handleSubmit, onCancel }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -10,7 +10,7 @@ const UserForm = ({ handleSubmit }) => {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData({
             ...formData,
             [name]: value,
@@ -70,6 +70,9 @@ const UserForm = ({ handleSubmit }) => {
                         <Button variant="primary" type="submit" className="mt-3">
                             Register
                         </Button>
+                        <div>
+                            <Button variant="secondary" onClick={onCancel} className="mt-3">Cancel</Button>
+                        </div>
                     </Form>
                 </Col>
             </Row>
