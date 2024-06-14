@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col, InputGroup } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, InputGroup, Alert } from 'react-bootstrap';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const UserForm = ({ handleSubmit, onCancel }) => {
@@ -11,6 +11,7 @@ const UserForm = ({ handleSubmit, onCancel }) => {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -22,6 +23,11 @@ const UserForm = ({ handleSubmit, onCancel }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        if (formData.password !== formData.password_confirmation) {
+            setError('Passwords do not match!');
+            return;
+        }
+        setError('');
         handleSubmit(formData);
     };
 
@@ -30,6 +36,7 @@ const UserForm = ({ handleSubmit, onCancel }) => {
             <Row className="justify-content-md-center">
                 <Col md={6}>
                     <Form onSubmit={onSubmit}>
+                        {error && <Alert variant="danger">{error}</Alert>}
                         <Form.Group controlId="formName">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
