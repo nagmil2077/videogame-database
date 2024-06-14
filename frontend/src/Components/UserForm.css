@@ -1,0 +1,49 @@
+.user-form-container {
+    margin-top: 20px;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-form-group {
+    margin-bottom: 1rem;
+}
+
+button.user-form-button {
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.user-form .form-text {
+    max-width: 100%;
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #6c757d;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.user-form-group .form-label {
+    font-weight: bold;
+}
+
+.user-form-group .form-control {
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.user-form .alert {
+    margin-bottom: 1.5rem;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.user-form .row.justify-content-md-center {
+    text-align: center;
+}
