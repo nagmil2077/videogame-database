@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Form, Button, Container, Row, Col, Alert, InputGroup} from 'react-bootstrap';
-import './UserForm.css';
+import './LoginForm.css';
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 const LoginForm = ({ handleSubmit, onCancel }) => {
@@ -30,12 +30,12 @@ const LoginForm = ({ handleSubmit, onCancel }) => {
     };
 
     return (
-        <Container className="user-form-container">
+        <Container className="login-form-container">
             <Row className="justify-content-md-center">
                 <Col md={6}>
-                    <Form onSubmit={onSubmit} className="user-form">
+                    <Form onSubmit={onSubmit} className="login-form">
                         {error && <Alert variant="danger">{error}</Alert>}
-                        <Form.Group controlId="formEmail" className="user-form-group">
+                        <Form.Group controlId="formEmail" className="login-form-group">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                                 type="email"
@@ -45,7 +45,7 @@ const LoginForm = ({ handleSubmit, onCancel }) => {
                                 onChange={handleChange}
                             />
                         </Form.Group>
-                        <Form.Group controlId="formPassword" className="user-form-group">
+                        <Form.Group controlId="formPassword" className="login-form-group">
                             <Form.Label>Password</Form.Label>
                             <InputGroup>
                                 <Form.Control
@@ -61,10 +61,10 @@ const LoginForm = ({ handleSubmit, onCancel }) => {
                             </InputGroup>
                         </Form.Group>
                         <div className="button-container">
-                            <Button variant="primary" type="submit" className="user-form-button">
+                            <Button variant="primary" type="submit" className="login-form-button">
                                 Login
                             </Button>
-                            <Button variant="secondary" type="button" onClick={onCancel} className="user-form-button">
+                            <Button variant="secondary" type="button" onClick={onCancel} className="login-form-button">
                                 Cancel
                             </Button>
                         </div>
