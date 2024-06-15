@@ -6,9 +6,10 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import Header from "./Pages/Header/Header";
-import MainPage from "./Pages/MainPage"
+import MainPage from "./Pages/MainPage";
 import SearchResults from "./Pages/SearchResults";
-import GamePage from "./Pages/GamePage"
+import GamePage from "./Pages/GamePage";
+import RegisterPage from "./Pages/RegisterPage";
 import ErrorPage from "./Pages/ErrorPage";
 
 const router = createBrowserRouter([
@@ -26,8 +27,12 @@ const router = createBrowserRouter([
                 element: <SearchResults/>,
             },
             {
-                path: "games/:gameName",
+                path: "/games/:gameName",
                 element: <GamePage/>,
+            },
+            {
+                path: "/register",
+                element: <RegisterPage />,
             },
         ],
     },
