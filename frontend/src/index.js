@@ -10,6 +10,7 @@ import MainPage from "./Pages/MainPage";
 import SearchResults from "./Pages/SearchResults";
 import GamePage from "./Pages/GamePage";
 import RegisterPage from "./Pages/RegisterPage";
+import LoginPage from "./Pages/LoginPage";
 import ErrorPage from "./Pages/ErrorPage";
 
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <RegisterPage />,
+            },
+            {
+                path: "/login",
+                element: <LoginPage />,
             },
         ],
     },
