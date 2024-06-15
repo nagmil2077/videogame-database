@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import {Form, Button, Container, Row, Col, Alert, InputGroup} from 'react-bootstrap';
 import './UserForm.css';
+import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 const LoginForm = ({ handleSubmit, onCancel }) => {
     const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const LoginForm = ({ handleSubmit, onCancel }) => {
         password: '',
     });
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,13 +47,18 @@ const LoginForm = ({ handleSubmit, onCancel }) => {
                         </Form.Group>
                         <Form.Group controlId="formPassword" className="user-form-group">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Enter your password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
+                            <InputGroup>
+                                <Form.Control
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                />
+                                <Button onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? <FaEyeSlash/> : <FaEye/>}
+                                </Button>
+                            </InputGroup>
                         </Form.Group>
                         <div className="button-container">
                             <Button variant="primary" type="submit" className="user-form-button">
