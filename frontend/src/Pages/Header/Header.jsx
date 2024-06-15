@@ -14,7 +14,7 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
                         <SearchField />
                         <Nav className="ml-auto">
-                            <Nav.Link href="#login">Login</Nav.Link>
+                            <Nav.Link as={Link} to="/login">Login</Nav.Link>
                             <Nav.Link as={Link} to="/register">Register</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
