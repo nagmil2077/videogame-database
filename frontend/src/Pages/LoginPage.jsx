@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import LoginForm from '../Components/LoginForm';
 import axios from 'axios';
-import './LoginPage.css';
+import './FormPage.css';
 
 const loginUser = (formData) => {
   return axios.post('http://127.0.0.1:8000/api/login', formData);
@@ -25,8 +25,8 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="login-page-container">
-            <h2 className="login-title">Login</h2>
+        <div className="form-page-container">
+            <h2 className="form-title">Login</h2>
             <LoginForm
                 handleSubmit={handleSubmit}
                 onCancel={() => navigate('/')}
