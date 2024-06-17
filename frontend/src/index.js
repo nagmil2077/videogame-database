@@ -10,7 +10,9 @@ import MainPage from "./Pages/MainPage";
 import SearchResults from "./Pages/SearchResults";
 import GamePage from "./Pages/GamePage";
 import RegisterPage from "./Pages/RegisterPage";
+import LoginPage from "./Pages/LoginPage";
 import ErrorPage from "./Pages/ErrorPage";
+import {AuthProvider} from './Contexts/AuthContext';
 
 const router = createBrowserRouter([
     {
@@ -32,7 +34,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/register",
-                element: <RegisterPage />,
+                element: <RegisterPage/>,
+            },
+            {
+                path: "/login",
+                element: <LoginPage/>,
             },
         ],
     },
@@ -41,7 +47,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <AuthProvider>
+            <RouterProvider router={router}/>
+        </AuthProvider>
     </React.StrictMode>
 );
 

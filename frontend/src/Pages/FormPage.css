@@ -1,4 +1,4 @@
-.register-page-container {
+.form-page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,7 +11,7 @@
     padding: 20px;
 }
 
-.register-title {
+.form-title {
     margin-bottom: 20px;
     font-size: 2rem;
     font-weight: bold;

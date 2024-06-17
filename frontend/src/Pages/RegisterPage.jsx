@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserForm from "../Components/UserForm";
 import axios from "axios";
-import "./RegisterPage.css";
+import "./FormPage.css";
 
 const registerUser = (formData) => {
-    return axios.post('http://127.0.0.1:8000/api/register', formData);
+    return axios.post('http://localhost:8000/api/register', formData);
 };
 
 const RegisterPage = () => {
@@ -21,8 +21,8 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="register-page-container">
-            <h2 className="register-title">Register</h2>
+        <div className="form-page-container">
+            <h2 className="form-title">Register</h2>
             <UserForm
                 handleSubmit={handleSubmit}
                 onCancel={() => navigate('/')}
