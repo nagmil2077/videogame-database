@@ -9,3 +9,9 @@
 .navbar-collapse {
     justify-content: space-between;
 }
+
+.navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
