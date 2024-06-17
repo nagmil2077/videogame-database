@@ -18,7 +18,7 @@ const Header = () => {
                         <SearchField/>
                         <Nav className="ml-auto">
                             {user ? (
-                                <NavDropdown title={user.name} id="user-dropdown">
+                                <NavDropdown menuVariant="dark" title={user.name} id="user-dropdown">
                                     <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
                                     <NavDropdown.Item onClick={() => logout()}>Logout</NavDropdown.Item>
                                 </NavDropdown>
