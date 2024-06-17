@@ -12,7 +12,7 @@ import GamePage from "./Pages/GamePage";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import ErrorPage from "./Pages/ErrorPage";
-import {AuthProvider} from './contexts/AuthContext';
+import {AuthProvider} from './Contexts/AuthContext';
 
 const router = createBrowserRouter([
     {

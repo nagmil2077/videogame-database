@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import LoginForm from '../Components/LoginForm';
 import axios from 'axios';
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../Contexts/AuthContext';
 import './FormPage.css';
 
 const loginUser = (formData) => {
