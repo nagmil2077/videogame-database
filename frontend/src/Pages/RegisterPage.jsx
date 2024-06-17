@@ -5,7 +5,7 @@ import axios from "axios";
 import "./FormPage.css";
 
 const registerUser = (formData) => {
-    return axios.post('http://127.0.0.1:8000/api/register', formData);
+    return axios.post('http://localhost:8000/api/register', formData);
 };
 
 const RegisterPage = () => {

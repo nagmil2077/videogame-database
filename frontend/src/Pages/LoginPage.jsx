@@ -5,7 +5,7 @@ import axios from 'axios';
 import './FormPage.css';
 
 const loginUser = (formData) => {
-  return axios.post('http://127.0.0.1:8000/api/login', formData);
+  return axios.post('http://localhost:8000/api/login', formData);
 };
 
 const LoginPage = () => {
