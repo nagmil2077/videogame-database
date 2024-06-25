@@ -56,6 +56,14 @@ class RegisterControllerTest extends TestCase
         $this->assertTrue(Hash::check('password', $user->password));
     }
 
+    /**
+     * Test registration with an existing email.
+     *
+     * This test verifies that a registration attempt with an email that already
+     * exists in the database returns a validation error.
+     *
+     * @return void
+     */
     public function testRegistrationWithExistingEmail()
     {
         User::factory()->create([
@@ -72,5 +80,27 @@ class RegisterControllerTest extends TestCase
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['email']);
+    }
+
+    /**
+     * Test registration with validation errors.
+     *
+     * This test verifies that registration attempts with invalid data return
+     * appropriate validation errors.
+     *
+     * @return void
+     */
+    public function testRegistrationWithValidationErrors()
+    {
+        $userData = [
+            'name' => '',
+            'email' => 'invalid-email',
+            'password' => '7',
+        ];
+
+        $response = $this->postJson('/api/register', $userData);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['name', 'email', 'password']);
     }
 }
