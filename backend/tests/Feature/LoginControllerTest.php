@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 /**
@@ -46,6 +45,14 @@ class LoginControllerTest extends TestCase
             ]);
     }
 
+    /**
+     * Test login with invalid credentials.
+     *
+     * This test verifies that a login attempt with incorrect credentials
+     * returns an unauthorized error.
+     *
+     * @return void
+     */
     public function testLoginWithInvalidCredentials()
     {
         User::factory()->create([
@@ -60,5 +67,24 @@ class LoginControllerTest extends TestCase
 
         $response->assertStatus(401)
             ->assertJson(['error' => 'Unauthorized']);
+    }
+
+    /**
+     * Test login with validation errors.
+     *
+     * This test verifies that login attempts with missing or invalid
+     * credentials return appropriate validation errors.
+     *
+     * @return void
+     */
+    public function testLoginWithValidationErrors()
+    {
+        $response = $this->postJson('/api/login', [
+            'email' => 'invalid-email',
+            'password' => '',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email', 'password']);
     }
 }
