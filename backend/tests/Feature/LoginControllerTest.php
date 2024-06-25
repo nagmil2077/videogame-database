@@ -46,5 +46,19 @@ class LoginControllerTest extends TestCase
             ]);
     }
 
+    public function testLoginWithInvalidCredentials()
+    {
+        User::factory()->create([
+            'email' => 'test@test.com',
+            'password' => bcrypt('password'),
+        ]);
 
+        $response = $this->postJson('/api/login', [
+            'email' => 'test@test.com',
+            'password' => 'wrongpassword',
+        ]);
+
+        $response->assertStatus(401)
+            ->assertJson(['error' => 'Unauthorized']);
+    }
 }
