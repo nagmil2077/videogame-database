@@ -56,5 +56,21 @@ class RegisterControllerTest extends TestCase
         $this->assertTrue(Hash::check('password', $user->password));
     }
 
+    public function testRegistrationWithExistingEmail()
+    {
+        User::factory()->create([
+            'email' => 'test@test.com',
+        ]);
 
+        $userData = [
+            'name' => 'Test User',
+            'email' => 'test@test.com',
+            'password' => 'password',
+        ];
+
+        $response = $this->postJson('/api/register', $userData);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
+    }
 }
