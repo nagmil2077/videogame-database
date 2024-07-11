@@ -8,7 +8,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/nagmil2077/videogame-database">
-    <img src="images/front.jpg" alt="Logo" width="50%" height="50%">
+    <img src="images/front.jpg" alt="Logo" width="40%" height="40%">
   </a>
 
 <h3 align="center">Videogame Database Project</h3>
@@ -30,11 +30,11 @@
 
 This project is still work-in-progress and was created for educational purposes.\
 The main goal of this project was to create a video game database website that allows users to browse a rich collection
-of games, display multiple information from them, and add them to favorites.\
+of games, display multiple information about them, and add them to their own favorites collection.\
 The current state of the project was created under a 3-week sprint.
 It contains two projects, one for the frontend and one for the backend.\
 The frontend was created with React, the backend is handled using Laravel, and the database was established using MySQL.\
-The project currently displays video games fetched from an API serivice, it has a search feature, and
+The project currently displays video games fetched from an API service, it has a search feature, and
 also has Register/Login features as well.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -69,7 +69,7 @@ You can clone the project and install it to see it in action.
 
 ### Installation
 
-1. Create MySQL Database
+1. **Create MySQL Database**
 - Install MySQL if not already installed.
 - Create a new database on the MySQL server in your computer terminal (launching MySQL with your username), using the following commands:
 ```sql
@@ -78,11 +78,11 @@ mysql -u Your_DB_Username -p
 ```sql
 CREATE DATABASE videogame_db;
 ```
-2. Clone the repo.
+2. **Clone the repo.**
 ```sh
 git clone https://github.com/nagmil2077/videogame-database.git
 ```
-3. Backend setup:
+3. **Backend setup**:
 - Navigate to the backend directory.
 - Install PHP dependencies using Composer.
 ```sh
@@ -98,13 +98,13 @@ composer install
 ```sh
 php artisan migrate
 ```
-4. Frontend setup:
+4. **Frontend setup**:
 - Navigate to the frontend directory.
 - Install JavaScript dependencies using npm.
 ```sh
 npm install
 ```
-5. Start the development servers
+5. **Start the development servers**
 - Navigate to the backend folder and start the backend server using the following command:
 ```sh
 php artisan serve
@@ -113,7 +113,7 @@ php artisan serve
 ```sh
 npm start
 ```
-6. Open the frontend in your web browser.
+6. **Open the frontend in your web browser.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
