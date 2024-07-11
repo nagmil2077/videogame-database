@@ -19,7 +19,7 @@ body, html {
 }
 
 .main-page {
-  background: url('https://images.alphacoders.com/293/thumb-1920-293311.jpg') no-repeat center center fixed;
+  background: url('../public/images/bg-mainpage.jpg') no-repeat center center fixed;
   background-size: cover;
   color: white;
   min-height: 100vh;

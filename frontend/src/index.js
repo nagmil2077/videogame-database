@@ -6,18 +6,39 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import Header from "./Pages/Header/Header";
-import MainPage from "./Pages/MainPage"
+import MainPage from "./Pages/MainPage";
+import SearchResults from "./Pages/SearchResults";
+import GamePage from "./Pages/GamePage";
+import RegisterPage from "./Pages/RegisterPage";
+import LoginPage from "./Pages/LoginPage";
 import ErrorPage from "./Pages/ErrorPage";
+import {AuthProvider} from './Contexts/AuthContext';
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Header />,
-        errorElement: <ErrorPage />,
+        element: <Header/>,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 path: "/",
-                element: <MainPage />,
+                element: <MainPage/>,
+            },
+            {
+                path: "/search",
+                element: <SearchResults/>,
+            },
+            {
+                path: "/games/:gameName",
+                element: <GamePage/>,
+            },
+            {
+                path: "/register",
+                element: <RegisterPage/>,
+            },
+            {
+                path: "/login",
+                element: <LoginPage/>,
             },
         ],
     },
@@ -26,7 +47,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <AuthProvider>
+            <RouterProvider router={router}/>
+        </AuthProvider>
     </React.StrictMode>
 );
 

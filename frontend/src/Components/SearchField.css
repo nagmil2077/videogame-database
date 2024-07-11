@@ -1,0 +1,45 @@
+.search-field {
+    position: relative;
+    width: 50%;
+    margin: 0 auto; /* Center the search field */
+}
+
+.search-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175);
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.search-result-thumbnail {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+/*.search-result-name {*/
+/*    flex: 1;*/
+/*}*/
+
+.search-result-year {
+    margin-left: 6px;
+    color: gray;
+}
+
+.dropdown-item {
+    white-space: normal;
+}
