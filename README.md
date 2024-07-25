@@ -130,7 +130,7 @@ Project Link: [https://github.com/nagmil2077/videogame-database](https://github.
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/CodecoolGlobal/el-proyecte-grande-design-general-nagmil2077/graphs/contributors
+[contributors-url]: https://github.com/nagmil2077/videogame-database/graphs/contributors
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/milan-nagy-a76b1416a/
 [product-screenshot]: images/site.png
