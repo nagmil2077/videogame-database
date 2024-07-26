@@ -33,7 +33,7 @@ const MainPage = () => {
                     <p className="lead">Your ultimate video game database. Discover and explore new games every day!</p>
                 </div>
                 <Row>
-                    {games.map(game => (
+                    {games && games.map(game => (
                         <Col key={game.id} xs={12} sm={6} md={4} lg={3}>
                             <GameCard game={game} />
                         </Col>
