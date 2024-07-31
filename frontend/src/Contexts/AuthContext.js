@@ -14,6 +14,10 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
+    const updateUser = (newUserData) => {
+        setUser(newUserData);
+    };
+
     const login = (userData) => {
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
@@ -39,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, updateUser, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

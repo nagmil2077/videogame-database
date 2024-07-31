@@ -5,7 +5,7 @@ import UserForm from '../Components/UserForm';
 import axios from 'axios';
 import './FormPage.css';
 
-const updateUser = (formData, token) => {
+const updateUserProfile = (formData, token) => {
     return axios.patch('http://localhost:8000/api/profile/update', formData, {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -14,7 +14,7 @@ const updateUser = (formData, token) => {
 };
 
 const UpdateProfilePage = () => {
-    const { user } = useContext(AuthContext);
+    const { user, updateUser } = useContext(AuthContext);
     const [formData, setFormData] = useState({name: '', email: ''});
     const navigate = useNavigate();
 
@@ -27,7 +27,9 @@ const UpdateProfilePage = () => {
     const handleSubmit = async (data) => {
         try {
             const token = localStorage.getItem('auth_token');
-            await updateUser(data, token);
+            const response = await updateUserProfile(data, token);
+            const updatedUser = response.data.user;
+            updateUser(updatedUser);
             alert('Profile updated successfully');
             navigate('/profile');
         } catch (error) {
