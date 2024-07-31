@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Form, Button, Container, Row, Col, InputGroup, Alert, Collapse} from 'react-bootstrap';
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import './UserForm.css';
 
-const UserForm = ({handleSubmit, onCancel}) => {
+const UserForm = ({handleSubmit, onCancel, initialData = {}, buttonLabel}) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -14,6 +14,12 @@ const UserForm = ({handleSubmit, onCancel}) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState('');
     const [passwordFocused, setPasswordFocused] = useState(false);
+
+    useEffect(() => {
+        if (initialData) {
+            setFormData({ ...formData, ...initialData });
+        }
+    }, [initialData]);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -47,6 +53,7 @@ const UserForm = ({handleSubmit, onCancel}) => {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
+                                required
                             />
                         </Form.Group>
                         <Form.Group controlId="formEmail" className="user-form-group">
@@ -57,6 +64,7 @@ const UserForm = ({handleSubmit, onCancel}) => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
+                                required
                             />
                         </Form.Group>
                         <Form.Group controlId="formPassword" className="user-form-group">
@@ -104,7 +112,7 @@ const UserForm = ({handleSubmit, onCancel}) => {
                                 variant="primary"
                                 type="submit"
                                 className="user-form-button">
-                                Register
+                                {buttonLabel}
                             </Button>
                             <Button
                                 variant="secondary"
