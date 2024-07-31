@@ -29,11 +29,12 @@ export const AuthProvider = ({ children }) => {
                     }
                 });
             }
+        } catch (error) {
+            console.error('Logout failed:', error);
+        } finally {
             setUser(null);
             localStorage.removeItem('user');
             localStorage.removeItem('auth_token');
-        } catch (error) {
-            console.error('Logout failed:', error);
         }
     };
 
