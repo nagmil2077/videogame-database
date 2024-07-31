@@ -6,7 +6,7 @@ import axios from 'axios';
 import './FormPage.css';
 
 const updateUser = (formData, token) => {
-    return axios.put('http://localhost:8000/api/profile/update', formData, {
+    return axios.patch('http://localhost:8000/api/profile/update', formData, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
