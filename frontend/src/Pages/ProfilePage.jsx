@@ -1,11 +1,36 @@
-import {useContext} from "react";
+import React, {useContext, useState} from "react";
 import { AuthContext } from '../Contexts/AuthContext';
-import {Button, Container} from "react-bootstrap";
+import { useNavigate, Link } from 'react-router-dom';
+import {Modal, Button, Container} from "react-bootstrap";
+import axios from 'axios';
 import './FormPage.css';
-import {Link} from "react-router-dom";
+
+const deleteUserProfile = (token) => {
+    return axios.delete('http://localhost:8000/api/profile/', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+};
 
 const ProfilePage = () => {
-    const { user } = useContext(AuthContext);
+    const { user, updateUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [showConfirm, setShowConfirm] = useState(false);
+
+    const handleDeleteProfile = () => {
+        try {
+            const token = localStorage.getItem('auth_token');
+            deleteUserProfile(token);
+            localStorage.removeItem('auth_token');
+            updateUser(null);
+            alert('Profile deleted successfully');
+            navigate('/');
+        } catch (error) {
+            console.error('Error deleting profile:', error);
+            alert('Failed to delete profile. Please try again.');
+        }
+    }
 
     return (
         <div className="form-page-container">
@@ -14,13 +39,36 @@ const ProfilePage = () => {
                 <Button variant="primary" className="my-2" size="lg">View Favorites</Button>
                 <Button
                     variant="primary"
-                    className="my-2" size="lg"
+                    className="my-2"
+                    size="lg"
                     as={Link}
                     to="/profile/update">
                     Update Profile
                 </Button>
-                <Button variant="danger" className="my-2" size="lg">Delete Profile</Button>
+                <Button
+                    variant="danger"
+                    className="my-2"
+                    size="lg"
+                    onClick={() => setShowConfirm(true)}>
+                    Delete Profile
+                </Button>
             </Container>
+
+            {/* Delete Confirmation Modal */}
+            <Modal show={showConfirm} onHide={() => setShowConfirm(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete your profile? This action cannot be undone.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowConfirm(false)}>
+                        No
+                    </Button>
+                    <Button variant="danger" onClick={handleDeleteProfile}>
+                        Yes, delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };
