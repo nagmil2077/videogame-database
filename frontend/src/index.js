@@ -12,6 +12,7 @@ import GamePage from "./Pages/GamePage";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import ErrorPage from "./Pages/ErrorPage";
+import ProfilePage from "./Pages/ProfilePage";
 import {AuthProvider} from './Contexts/AuthContext';
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
                 path: "/login",
                 element: <LoginPage/>,
             },
+            {
+                path: "/profile",
+                element: <ProfilePage />,
+            }
         ],
     },
 ]);
