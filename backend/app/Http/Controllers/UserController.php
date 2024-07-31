@@ -35,4 +35,16 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Profile updated successfully', 'user' => $user]);
     }
+
+    public function deleteProfile(Request $request): JsonResponse
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            $user->delete();
+            return response()->json(['message' => 'Profile deleted successfully', Response::HTTP_OK]);
+        }
+
+        return response()->json(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+    }
 }

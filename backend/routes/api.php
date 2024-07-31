@@ -23,4 +23,5 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::patch('/profile/update', [UserController::class, 'updateProfile']);
+    Route::delete('/profile', [UserController::class, 'deleteProfile']);
 });
