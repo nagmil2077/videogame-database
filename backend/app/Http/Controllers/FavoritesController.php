@@ -6,6 +6,7 @@ use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class FavoritesController extends Controller
 {
@@ -36,5 +37,15 @@ class FavoritesController extends Controller
         $favorites = $user->favorites;
 
         return response()->json(['favorites' => $favorites]);
+    }
+
+    public function checkFavorite(Request $request, $game_id): JsonResponse
+    {
+        $user = $request->user();
+        $isFavorite = Favorite::query()->where('user_id', $user->id)
+            ->where('game_id', $game_id)
+            ->exists();
+
+        return response()->json(['isFavorite' => $isFavorite], Response::HTTP_OK);
     }
 }
