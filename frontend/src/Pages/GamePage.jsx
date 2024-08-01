@@ -43,7 +43,7 @@ const GamePage = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedScreenshot, setSelectedScreenshot] = useState(null);
     const navigate = useNavigate();
-    const [token, setToken] = useState(localStorage.getItem('auth_token'));
+    const [token] = useState(localStorage.getItem('auth_token'));
 
     useEffect(() => {
         fetchDetails(gameName)
