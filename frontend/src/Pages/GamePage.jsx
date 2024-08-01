@@ -21,9 +21,8 @@ const fetchScreenshots = async (gameName) => {
     }
 };
 
-const checkIfFavorite = async (gameId) => {
+const checkIfFavorite = async (gameId, token) => {
     try {
-        const token = localStorage.getItem('auth_token');
         const response = await axios.get(`http://localhost:8000/api/favorites/${gameId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -44,6 +43,7 @@ const GamePage = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedScreenshot, setSelectedScreenshot] = useState(null);
     const navigate = useNavigate();
+    const [token, setToken] = useState(localStorage.getItem('auth_token'));
 
     useEffect(() => {
         fetchDetails(gameName)
@@ -54,10 +54,10 @@ const GamePage = () => {
     }, [gameName]);
 
     useEffect(() => {
-        if (game) {
-            checkIfFavorite(game.id).then(setIsFavorite);
+        if (game && token) {
+            checkIfFavorite(game.id, token).then(setIsFavorite);
         }
-    }, [game]);
+    }, [game, token]);
 
     const handleScreenshotClick = (screenshot) => {
         setSelectedScreenshot(screenshot);
@@ -70,8 +70,8 @@ const GamePage = () => {
     };
 
     const handleAddToFavorites = async () => {
+        if (!token) return;
         try {
-            const token = localStorage.getItem('auth_token');
             await axios.post('http://localhost:8000/api/favorites', { game_id: game.id }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -84,9 +84,9 @@ const GamePage = () => {
     };
 
     const handleRemoveFromFavorites = async () => {
+        if (!token) return;
         if (window.confirm("Are you sure you want to remove this game from your favorites?")) {
             try {
-                const token = localStorage.getItem('auth_token');
                 await axios.delete(`http://localhost:8000/api/favorites/${game.id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -115,6 +115,14 @@ const GamePage = () => {
                         <p><strong>Genre:</strong> {game.genres.map(genre => genre.name).join(', ')}</p>
                         <p><strong>Developer:</strong> {game.developers.map(dev => dev.name).join(', ')}</p>
                         <p><strong>Description:</strong> {game.description_raw}</p>
+                        {token && (
+                            <Button
+                                variant={isFavorite ? "danger" : "primary"}
+                                onClick={isFavorite ? handleRemoveFromFavorites : handleAddToFavorites}
+                            >
+                                {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                            </Button>
+                        )}
                     </Col>
                 </Row>
                 <Row className="mt-4">
