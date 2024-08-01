@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import SearchField from '../../Components/SearchField';
 import { AuthContext } from '../../Contexts/AuthContext';
@@ -7,6 +7,14 @@ import "./Header.css"
 
 const Header = () => {
     const {user, logout} = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout()
+            .then(() => {
+            navigate('/');
+        });
+    };
 
     return (
         <div className="Header">
@@ -20,7 +28,7 @@ const Header = () => {
                             {user ? (
                                 <NavDropdown menuVariant="dark" title={user.name} id="user-dropdown">
                                     <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
-                                    <NavDropdown.Item onClick={() => logout()}>Logout</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
                                 </NavDropdown>
                             ) : (
                                 <>

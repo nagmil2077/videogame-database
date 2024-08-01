@@ -26,6 +26,7 @@ const RegisterPage = () => {
             <UserForm
                 handleSubmit={handleSubmit}
                 onCancel={() => navigate('/')}
+                buttonLabel="Register"
             />
         </div>
     );

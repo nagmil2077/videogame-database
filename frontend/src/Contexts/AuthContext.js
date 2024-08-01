@@ -14,6 +14,10 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
+    const updateUser = (newUserData) => {
+        setUser(newUserData);
+    };
+
     const login = (userData) => {
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
@@ -29,16 +33,17 @@ export const AuthProvider = ({ children }) => {
                     }
                 });
             }
+        } catch (error) {
+            console.error('Logout failed:', error);
+        } finally {
             setUser(null);
             localStorage.removeItem('user');
             localStorage.removeItem('auth_token');
-        } catch (error) {
-            console.error('Logout failed:', error);
         }
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, updateUser, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
