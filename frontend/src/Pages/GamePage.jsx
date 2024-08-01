@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {fetchGameDetails, fetchGameScreenshots} from '../Services/rawgService';
 import {Button, Col, Container, Image, Modal, Row} from 'react-bootstrap';
+import axios from 'axios';
 import './GamePage.css';
 
 const fetchDetails = async (gameName) => {
@@ -17,6 +18,21 @@ const fetchScreenshots = async (gameName) => {
         return await fetchGameScreenshots(gameName);
     } catch (error) {
         console.error("Error fetching game screenshots:", error);
+    }
+};
+
+const checkIfFavorite = async (gameId) => {
+    try {
+        const token = localStorage.getItem('auth_token');
+        const response = await axios.get(`/api/favorites/${gameId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data.isFavorite;
+    } catch (error) {
+        console.error("Error checking favorite status:", error);
+        return false;
     }
 };
 
