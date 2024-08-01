@@ -21,12 +21,20 @@ class FavoritesController extends Controller
         return response()->json(['message' => 'Game added to favorites', 'favorite' => $favorite]);
     }
 
-    public function removeFromFavorites($gameId)
+    public function removeFromFavorites($gameId): JsonResponse
     {
         $user = Auth::user();
 
         Favorite::query()->where('user_id', $user->id)->where('game_id', $gameId)->delete();
 
         return response()->json(['message' => 'Game removed from favorites']);
+    }
+
+    public function getFavorites(): JsonResponse
+    {
+        $user = Auth::user();
+        $favorites = $user->favorites;
+
+        return response()->json(['favorites' => $favorites]);
     }
 }
