@@ -27,6 +27,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/profile', [UserController::class, 'deleteProfile']);
     Route::post('/favorites', [FavoritesController::class, 'addToFavorites']);
     Route::delete('/favorites/{game_id}', [FavoritesController::class, 'removeFromFavorites']);
-    Route::get('/favorites', [FavoritesController::class, 'getFavorites']);
     Route::get('/favorites/{game_id}', [FavoritesController::class, 'checkFavorite']);
 });

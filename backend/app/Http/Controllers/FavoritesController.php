@@ -32,14 +32,6 @@ class FavoritesController extends Controller
         return response()->json(['message' => 'Game removed from favorites']);
     }
 
-    public function getFavorites(): JsonResponse
-    {
-        $user = Auth::user();
-        $favorites = $user->favorites;
-
-        return response()->json(['favorites' => $favorites]);
-    }
-
     public function checkFavorite(Request $request, $game_id): JsonResponse
     {
         $user = $request->user();
