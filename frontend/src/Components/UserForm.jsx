@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Form, Button, Container, Row, Col, InputGroup, Alert, Collapse} from 'react-bootstrap';
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import './UserForm.css';
@@ -14,10 +14,12 @@ const UserForm = ({handleSubmit, onCancel, initialData = {}, buttonLabel}) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState('');
     const [passwordFocused, setPasswordFocused] = useState(false);
+    const initialDataRef = useRef(initialData);
 
     useEffect(() => {
-        if (initialData) {
+        if (initialDataRef.current !== initialData) {
             setFormData({ ...formData, ...initialData });
+            initialDataRef.current = initialData;
         }
     }, [initialData]);
 

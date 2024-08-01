@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {fetchGameDetails, fetchGameScreenshots} from '../Services/rawgService';
 import {Button, Col, Container, Image, Modal, Row} from 'react-bootstrap';
+import axios from 'axios';
 import './GamePage.css';
 
 const fetchDetails = async (gameName) => {
@@ -20,13 +21,29 @@ const fetchScreenshots = async (gameName) => {
     }
 };
 
+const checkIfFavorite = async (gameId, token) => {
+    try {
+        const response = await axios.get(`http://localhost:8000/api/favorites/${gameId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data.isFavorite;
+    } catch (error) {
+        console.error("Error checking favorite status:", error);
+        return false;
+    }
+};
+
 const GamePage = () => {
     const { gameName } = useParams();
     const [game, setGame] = useState(null);
     const [screenshots, setScreenshots] = useState([]);
+    const [isFavorite, setIsFavorite] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [selectedScreenshot, setSelectedScreenshot] = useState(null);
     const navigate = useNavigate();
+    const [token] = useState(localStorage.getItem('auth_token'));
 
     useEffect(() => {
         fetchDetails(gameName)
@@ -36,6 +53,12 @@ const GamePage = () => {
             .then(data => setScreenshots(data.results));
     }, [gameName]);
 
+    useEffect(() => {
+        if (game && token) {
+            checkIfFavorite(game.id, token).then(setIsFavorite);
+        }
+    }, [game, token]);
+
     const handleScreenshotClick = (screenshot) => {
         setSelectedScreenshot(screenshot);
         setShowModal(true);
@@ -44,6 +67,34 @@ const GamePage = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setSelectedScreenshot(null);
+    };
+
+    const handleAddToFavorites = async () => {
+        if (!token) return;
+        try {
+            await axios.post('http://localhost:8000/api/favorites', { game_id: game.id }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            setIsFavorite(true);
+        } catch (error) {
+            console.error('Error adding to favorites:', error);
+        }
+    };
+
+    const handleRemoveFromFavorites = async () => {
+        if (!token) return;
+        if (window.confirm("Are you sure you want to remove this game from your favorites?")) {
+            try {
+                await axios.delete(`http://localhost:8000/api/favorites/${game.id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setIsFavorite(false);
+            } catch (error) {
+                console.error('Error removing from favorites:', error);
+            }
+        }
     };
 
     if (!game) {
@@ -64,6 +115,14 @@ const GamePage = () => {
                         <p><strong>Genre:</strong> {game.genres.map(genre => genre.name).join(', ')}</p>
                         <p><strong>Developer:</strong> {game.developers.map(dev => dev.name).join(', ')}</p>
                         <p><strong>Description:</strong> {game.description_raw}</p>
+                        {token && (
+                            <Button
+                                variant={isFavorite ? "danger" : "primary"}
+                                onClick={isFavorite ? handleRemoveFromFavorites : handleAddToFavorites}
+                            >
+                                {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                            </Button>
+                        )}
                     </Col>
                 </Row>
                 <Row className="mt-4">

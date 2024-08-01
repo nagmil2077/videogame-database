@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FavoritesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::patch('/profile/update', [UserController::class, 'updateProfile']);
     Route::delete('/profile', [UserController::class, 'deleteProfile']);
+    Route::post('/favorites', [FavoritesController::class, 'addToFavorites']);
+    Route::delete('/favorites/{game_id}', [FavoritesController::class, 'removeFromFavorites']);
+    Route::get('/favorites/{game_id}', [FavoritesController::class, 'checkFavorite']);
 });
