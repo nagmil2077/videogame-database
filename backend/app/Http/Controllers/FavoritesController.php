@@ -12,14 +12,15 @@ class FavoritesController extends Controller
 {
     public function addToFavorites(Request $request): JsonResponse
     {
-        $user = Auth::user();
-        $gameId = $request->input('gameId');
+        $user = $request->user();
+        $gameId = $request->input('game_id');
 
-        $favorite = Favorite::query()->firstOrCreate(
-            ['user_id' => $user->id, 'game_id' => $gameId]
-        );
+        $favorite = new Favorite();
+        $favorite->user_id = $user->id;
+        $favorite->game_id = $gameId;
+        $favorite->save();
 
-        return response()->json(['message' => 'Game added to favorites', 'favorite' => $favorite]);
+        return response()->json(['message' => 'Game added to favorites.'], Response::HTTP_CREATED);
     }
 
     public function removeFromFavorites($gameId): JsonResponse
