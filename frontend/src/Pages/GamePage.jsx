@@ -24,7 +24,7 @@ const fetchScreenshots = async (gameName) => {
 const checkIfFavorite = async (gameId) => {
     try {
         const token = localStorage.getItem('auth_token');
-        const response = await axios.get(`/api/favorites/${gameId}`, {
+        const response = await axios.get(`http://localhost:8000/api/favorites/${gameId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -40,6 +40,7 @@ const GamePage = () => {
     const { gameName } = useParams();
     const [game, setGame] = useState(null);
     const [screenshots, setScreenshots] = useState([]);
+    const [isFavorite, setIsFavorite] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [selectedScreenshot, setSelectedScreenshot] = useState(null);
     const navigate = useNavigate();
@@ -52,6 +53,12 @@ const GamePage = () => {
             .then(data => setScreenshots(data.results));
     }, [gameName]);
 
+    useEffect(() => {
+        if (game) {
+            checkIfFavorite(game.id).then(setIsFavorite);
+        }
+    }, [game]);
+
     const handleScreenshotClick = (screenshot) => {
         setSelectedScreenshot(screenshot);
         setShowModal(true);
@@ -60,6 +67,20 @@ const GamePage = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setSelectedScreenshot(null);
+    };
+
+    const handleAddToFavorites = async () => {
+        try {
+            const token = localStorage.getItem('auth_token');
+            await axios.post('http://localhost:8000/api/favorites', { game_id: game.id }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            setIsFavorite(true);
+        } catch (error) {
+            console.error('Error adding to favorites:', error);
+        }
     };
 
     if (!game) {
