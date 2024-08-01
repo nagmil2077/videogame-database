@@ -83,6 +83,20 @@ const GamePage = () => {
         }
     };
 
+    const handleRemoveFromFavorites = async () => {
+        if (window.confirm("Are you sure you want to remove this game from your favorites?")) {
+            try {
+                const token = localStorage.getItem('auth_token');
+                await axios.delete(`http://localhost:8000/api/favorites/${game.id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setIsFavorite(false);
+            } catch (error) {
+                console.error('Error removing from favorites:', error);
+            }
+        }
+    };
+
     if (!game) {
         return <div>Loading...</div>;
     }
