@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {getFavorites} from "../Services/favoritesService";
 import { Button, Container, Image, ListGroup } from 'react-bootstrap';
+import './FavoritesPage.css';
 
 const fetchFavorites = async () => {
     try {
