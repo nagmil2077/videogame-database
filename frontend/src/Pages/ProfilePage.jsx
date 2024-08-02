@@ -36,7 +36,13 @@ const ProfilePage = () => {
         <div className="form-page-container">
             <h2 className="form-title">Welcome, {user.name}!</h2>
             <Container className="d-flex flex-column align-items-center">
-                <Button variant="primary" className="my-2" size="lg">View Favorites</Button>
+                <Button
+                    variant="primary"
+                    className="my-2"
+                    size="lg"
+                    onClick={() => navigate('/favorites')}>
+                    View Favorites
+                </Button>
                 <Button
                     variant="primary"
                     className="my-2"
