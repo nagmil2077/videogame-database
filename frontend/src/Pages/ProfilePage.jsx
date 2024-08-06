@@ -22,6 +22,7 @@ const ProfilePage = () => {
         try {
             const token = localStorage.getItem('auth_token');
             deleteUserProfile(token);
+            localStorage.removeItem('user');
             localStorage.removeItem('auth_token');
             updateUser(null);
             alert('Profile deleted successfully');
