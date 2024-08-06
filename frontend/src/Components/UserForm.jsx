@@ -1,44 +1,43 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import {Form, Button, Container, Row, Col, InputGroup, Alert, Collapse} from 'react-bootstrap';
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import './UserForm.css';
 
-const UserForm = ({handleSubmit, onCancel, initialData = {}, buttonLabel}) => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+const UserForm = ({handleSubmit, onCancel, user, buttonLabel}) => {
+    const [name, setName] = useState(user?.name ?? '');
+    const [email, setEmail] = useState(user?.email ?? '');
+    const [password, setPassword] = useState('');
+    const [password_confirmation, setPasswordConfirmation] = useState('');
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState('');
     const [passwordFocused, setPasswordFocused] = useState(false);
-    const initialDataRef = useRef(initialData);
-
-    useEffect(() => {
-        if (initialDataRef.current !== initialData) {
-            setFormData({ ...formData, ...initialData });
-            initialDataRef.current = initialData;
-        }
-    }, [initialData]);
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (formData.password !== formData.password_confirmation) {
+        if (password !== password_confirmation) {
             setError('Passwords do not match!');
             return;
         }
         setError('');
-        handleSubmit(formData);
+
+        if (user) {
+            return handleSubmit({
+                ...user,
+                name,
+                email,
+                password,
+                password_confirmation,
+            });
+        }
+
+        return handleSubmit({
+            name,
+            email,
+            password,
+            password_confirmation,
+        });
     };
 
     return (
@@ -53,8 +52,8 @@ const UserForm = ({handleSubmit, onCancel, initialData = {}, buttonLabel}) => {
                                 type="text"
                                 placeholder="Enter your name"
                                 name="name"
-                                value={formData.name}
-                                onChange={handleChange}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 required
                             />
                         </Form.Group>
@@ -64,8 +63,8 @@ const UserForm = ({handleSubmit, onCancel, initialData = {}, buttonLabel}) => {
                                 type="email"
                                 placeholder="Enter your email"
                                 name="email"
-                                value={formData.email}
-                                onChange={handleChange}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </Form.Group>
@@ -76,8 +75,8 @@ const UserForm = ({handleSubmit, onCancel, initialData = {}, buttonLabel}) => {
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
                                     name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     onFocus={() => setPasswordFocused(true)}
                                     onBlur={() => setPasswordFocused(false)}
                                 />
@@ -100,9 +99,9 @@ const UserForm = ({handleSubmit, onCancel, initialData = {}, buttonLabel}) => {
                                 <Form.Control
                                     type={showConfirmPassword ? "text" : "password"}
                                     placeholder="Confirm your password"
-                                    name="password_confirmation"
-                                    value={formData.password_confirmation}
-                                    onChange={handleChange}
+                                    name="passwordConfirmation"
+                                    value={password_confirmation}
+                                    onChange={(e) => setPasswordConfirmation(e.target.value)}
                                 />
                                 <Button onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                                     {showConfirmPassword ? <FaEyeSlash/> : <FaEye/>}

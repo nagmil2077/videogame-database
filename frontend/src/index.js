@@ -14,6 +14,7 @@ import LoginPage from "./Pages/LoginPage";
 import ErrorPage from "./Pages/ErrorPage";
 import ProfilePage from "./Pages/ProfilePage";
 import UpdateProfilePage from './Pages/UpdateProfilePage';
+import FavoritesPage from "./Pages/FavoritesPage";
 import {AuthProvider} from './Contexts/AuthContext';
 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: "/profile/update",
                 element: <UpdateProfilePage />,
+            },
+            {
+                path: "/favorites",
+                element: <FavoritesPage />,
             }
         ],
     },
