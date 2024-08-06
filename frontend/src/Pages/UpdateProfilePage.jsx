@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import {AuthContext} from "../Contexts/AuthContext";
 import {useNavigate} from "react-router-dom";
 import UserForm from '../Components/UserForm';
@@ -15,14 +15,7 @@ const updateUserProfile = (formData, token) => {
 
 const UpdateProfilePage = () => {
     const { user, updateUser } = useContext(AuthContext);
-    const [formData, setFormData] = useState({name: '', email: ''});
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user) {
-            setFormData({ name: user.name, email: user.email });
-        }
-    }, [user]);
 
     const handleSubmit = async (data) => {
         try {
@@ -44,7 +37,7 @@ const UpdateProfilePage = () => {
             <UserForm
                 handleSubmit={handleSubmit}
                 onCancel={() => navigate('/profile')}
-                initialData={formData}
+                user={user}
                 buttonLabel="Update Profile"
             />
         </div>
