@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Favorite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,12 +26,19 @@ class FavoritesController extends Controller
         $user = $request->user();
         $gameId = $request->input('game_id');
 
-        $favorite = new Favorite();
-        $favorite->user_id = $user->id;
-        $favorite->game_id = $gameId;
-        $favorite->save();
+        try {
+            $favorite = new Favorite();
+            $favorite->user_id = $user->id;
+            $favorite->game_id = $gameId;
+            $favorite->save();
 
-        return response()->json(['message' => 'Game added to favorites.'], Response::HTTP_CREATED);
+            Log::info('Game added to favorites', ['user_id' => $user->id, 'game_id' => $gameId]);
+
+            return response()->json(['message' => 'Game added to favorites.'], Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            Log::error('Error adding game to favorites', ['user_id' => $user->id, 'game_id' => $gameId, 'exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error adding game to favorites'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function removeFromFavorites($gameId): JsonResponse
