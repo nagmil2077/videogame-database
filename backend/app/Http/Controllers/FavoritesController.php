@@ -78,21 +78,29 @@ class FavoritesController extends Controller
     public function getFavorites(): JsonResponse
     {
         $user = Auth::user();
-        $favoriteGameIds = Favorite::query()
-            ->where('user_id', $user->id)
-            ->pluck('game_id')
-            ->toArray();
 
-        $favoriteGames = [];
-        foreach ($favoriteGameIds as $gameId) {
-            $response = Http::get("{$this->baseUrl}/games/{$gameId}", [
-                'key' => $this->apiKey,
-            ]);
-            if ($response->successful()) {
-                $favoriteGames[] = $response->json();
+        try {
+            $favoriteGameIds = Favorite::query()
+                ->where('user_id', $user->id)
+                ->pluck('game_id')
+                ->toArray();
+
+            $favoriteGames = [];
+            foreach ($favoriteGameIds as $gameId) {
+                $response = Http::get("{$this->baseUrl}/games/{$gameId}", [
+                    'key' => $this->apiKey,
+                ]);
+                if ($response->successful()) {
+                    $favoriteGames[] = $response->json();
+                }
             }
-        }
 
-        return response()->json(['favorites' => $favoriteGames], Response::HTTP_OK);
+            Log::info('Fetched favorite games', ['user_id' => $user->id, 'favorite_game_ids' => $favoriteGameIds]);
+
+            return response()->json(['favorites' => $favoriteGames], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            Log::error('Error fetching favorite games', ['user_id' => $user->id, 'exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error fetching favorite games'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
