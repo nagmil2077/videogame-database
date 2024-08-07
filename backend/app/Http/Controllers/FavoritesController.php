@@ -45,9 +45,16 @@ class FavoritesController extends Controller
     {
         $user = Auth::user();
 
-        Favorite::query()->where('user_id', $user->id)->where('game_id', $gameId)->delete();
+        try {
+            Favorite::query()->where('user_id', $user->id)->where('game_id', $gameId)->delete();
 
-        return response()->json(['message' => 'Game removed from favorites']);
+            Log::info('Game removed from favorites', ['user_id' => $user->id, 'game_id' => $gameId]);
+
+            return response()->json(['message' => 'Game removed from favorites']);
+        } catch (\Exception $e) {
+            Log::error('Error removing game from favorites', ['user_id' => $user->id, 'game_id' => $gameId, 'exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error removing game from favorites'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function checkFavorite(Request $request, $game_id): JsonResponse
