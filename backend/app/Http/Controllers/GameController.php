@@ -54,11 +54,16 @@ class GameController extends Controller
 
     public function fetchScreenshots($slug): JsonResponse
     {
-        $response = Http::get("{$this->baseUrl}/games/{$slug}/screenshots", [
-            'key' => $this->apiKey,
-        ]);
-
-        return response()->json($response->json());
+        try {
+            $response = Http::get("{$this->baseUrl}/games/{$slug}/screenshots", [
+                'key' => $this->apiKey,
+            ]);
+            Log::info('Fetched screenshots', ['slug' => $slug]);
+            return response()->json($response->json());
+        } catch (\Exception $e) {
+            Log::error('Error fetching screenshots', ['slug' => $slug, 'exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error fetching screenshots'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function searchGames(Request $request): JsonResponse
