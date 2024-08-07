@@ -40,11 +40,16 @@ class GameController extends Controller
 
     public function fetchGame($slug): JsonResponse
     {
-        $response = Http::get("{$this->baseUrl}/games/{$slug}", [
-            'key' => $this->apiKey,
-        ]);
-
-        return response()->json($response->json());
+        try {
+            $response = Http::get("{$this->baseUrl}/games/{$slug}", [
+                'key' => $this->apiKey,
+            ]);
+            Log::info('Fetched game', ['slug' => $slug]);
+            return response()->json($response->json());
+        } catch (\Exception $e) {
+            Log::error('Error fetching game', ['slug' => $slug, 'exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error fetching game'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function fetchScreenshots($slug): JsonResponse
