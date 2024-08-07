@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
 
 class GameController extends Controller
@@ -22,13 +24,18 @@ class GameController extends Controller
         $page = $request->query('page', 1);
         $pageSize = $request->query('page_size', 10);
 
-        $response = Http::get("{$this->baseUrl}/games", [
-            'key' => $this->apiKey,
-            'page' => $page,
-            'page_size' => $pageSize,
-        ]);
-
-        return response()->json($response->json());
+        try {
+            $response = Http::get("{$this->baseUrl}/games", [
+                'key' => $this->apiKey,
+                'page' => $page,
+                'page_size' => $pageSize,
+            ]);
+            Log::info('Fetched all games', ['page' => $page, 'page_size' => $pageSize]);
+            return response()->json($response->json());
+        } catch (\Exception $e) {
+            Log::error('Error fetching all games', ['exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error fetching all games'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function fetchGame($slug): JsonResponse
