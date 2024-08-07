@@ -60,11 +60,19 @@ class FavoritesController extends Controller
     public function checkFavorite(Request $request, $game_id): JsonResponse
     {
         $user = $request->user();
-        $isFavorite = Favorite::query()->where('user_id', $user->id)
-            ->where('game_id', $game_id)
-            ->exists();
 
-        return response()->json(['isFavorite' => $isFavorite], Response::HTTP_OK);
+        try {
+            $isFavorite = Favorite::query()->where('user_id', $user->id)
+                ->where('game_id', $game_id)
+                ->exists();
+
+            Log::info('Checked if game is favorite', ['user_id' => $user->id, 'game_id' => $game_id, 'isFavorite' => $isFavorite]);
+
+            return response()->json(['isFavorite' => $isFavorite], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            Log::error('Error checking if game is favorite', ['user_id' => $user->id, 'game_id' => $game_id, 'exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error checking if game is favorite'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function getFavorites(): JsonResponse
