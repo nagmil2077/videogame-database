@@ -71,15 +71,21 @@ class GameController extends Controller
         $query = $request->query('query');
 
         if (strlen($query) < 2) {
+            Log::info('Search query too short', ['query' => $query]);
             return response()->json(['results' => []]);
         }
 
-        $response = Http::get("{$this->baseUrl}/games", [
-            'key' => $this->apiKey,
-            'search' => $query,
-            'page_size' => 10,
-        ]);
-
-        return response()->json($response->json());
+        try {
+            $response = Http::get("{$this->baseUrl}/games", [
+                'key' => $this->apiKey,
+                'search' => $query,
+                'page_size' => 10,
+            ]);
+            Log::info('Searched games', ['query' => $query]);
+            return response()->json($response->json());
+        } catch (\Exception $e) {
+            Log::error('Error searching games', ['query' => $query, 'exception' => $e->getMessage()]);
+            return response()->json(['error' => 'Error searching games'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
