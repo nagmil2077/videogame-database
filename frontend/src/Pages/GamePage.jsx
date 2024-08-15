@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {fetchGameDetails, fetchGameScreenshots} from '../Services/rawgService';
+import {checkFavorite} from "../Services/favoritesService";
 import {Button, Col, Container, Image, Modal, Row} from 'react-bootstrap';
 import axios from 'axios';
 import './GamePage.css';
@@ -23,12 +24,7 @@ const fetchScreenshots = async (gameName) => {
 
 const checkIfFavorite = async (gameId, token) => {
     try {
-        const response = await axios.get(`http://localhost:8000/api/favorites/${gameId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return response.data.isFavorite;
+        return await checkFavorite(gameId, token);
     } catch (error) {
         console.error("Error checking favorite status:", error);
         return false;

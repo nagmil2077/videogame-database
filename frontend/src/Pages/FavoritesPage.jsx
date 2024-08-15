@@ -7,7 +7,8 @@ import './FavoritesPage.css';
 
 const fetchFavorites = async () => {
     try {
-        return await getFavorites();
+        const token = localStorage.getItem('auth_token');
+        return await getFavorites(token);
     } catch (error) {
         console.error("Error fetching favorite games:", error);
     }
