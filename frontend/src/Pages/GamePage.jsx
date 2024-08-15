@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {fetchGameDetails, fetchGameScreenshots} from '../Services/rawgService';
-import {checkFavorite, addToFavorites} from "../Services/favoritesService";
+import {checkFavorite, addToFavorites, removeFromFavorites} from "../Services/favoritesService";
 import {Button, Col, Container, Image, Modal, Row} from 'react-bootstrap';
 import axios from 'axios';
 import './GamePage.css';
@@ -79,9 +79,7 @@ const GamePage = () => {
         if (!token) return;
         if (window.confirm("Are you sure you want to remove this game from your favorites?")) {
             try {
-                await axios.delete(`http://localhost:8000/api/favorites/${game.id}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+                await removeFromFavorites(game.id, token);
                 setIsFavorite(false);
             } catch (error) {
                 console.error('Error removing from favorites:', error);

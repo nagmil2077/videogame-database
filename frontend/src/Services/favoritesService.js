@@ -27,3 +27,11 @@ export const addToFavorites = async (gameId, token) => {
         },
     });
 };
+
+export const removeFromFavorites = async (gameId, token) => {
+    await axios.delete(`${BASE_URL}/favorites/${gameId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    });
+};
