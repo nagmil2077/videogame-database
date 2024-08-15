@@ -19,3 +19,11 @@ export const checkFavorite = async (gameId, token) => {
     });
     return response.data.isFavorite;
 };
+
+export const addToFavorites = async (gameId, token) => {
+    await axios.post(`${BASE_URL}/favorites`, { game_id: gameId }, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    });
+};

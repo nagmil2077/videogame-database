@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {fetchGameDetails, fetchGameScreenshots} from '../Services/rawgService';
-import {checkFavorite} from "../Services/favoritesService";
+import {checkFavorite, addToFavorites} from "../Services/favoritesService";
 import {Button, Col, Container, Image, Modal, Row} from 'react-bootstrap';
 import axios from 'axios';
 import './GamePage.css';
@@ -68,11 +68,7 @@ const GamePage = () => {
     const handleAddToFavorites = async () => {
         if (!token) return;
         try {
-            await axios.post('http://localhost:8000/api/favorites', { game_id: game.id }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-            });
+            await addToFavorites(game.id, token);
             setIsFavorite(true);
         } catch (error) {
             console.error('Error adding to favorites:', error);
