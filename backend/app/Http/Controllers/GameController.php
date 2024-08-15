@@ -81,7 +81,7 @@ class GameController extends Controller
                 'search' => $query,
                 'page_size' => 10,
             ]);
-            Log::info('Searched games', ['query' => $query]);
+//            Log::info('Searched games', ['query' => $query]);
             return response()->json($response->json());
         } catch (\Exception $e) {
             Log::error('Error searching games', ['query' => $query, 'exception' => $e->getMessage()]);
